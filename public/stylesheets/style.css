@@ -27,3 +27,10 @@ header, nav, section, footer{
 nav span {
 	margin: 0 10px 0 0;
 }
+
+div.author {
+	height: 100%;
+}
+.author div.photo img {
+	max-width: 150px;
+}
