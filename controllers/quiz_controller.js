@@ -1,22 +1,37 @@
 
 var models = require("../models/models.js");
 
+exports.load = function (req, res, next, quizId) {
+	models.Quiz.findById(quizId).then(
+		function (quiz) {
+			if (quiz) {
+				req.quiz = quiz;
+				next();
+			} else {
+				next( new Error("No existe quizId = " + quizId) );
+			}
+		}
+	).catch(function (error) { next(error); });
+};
+
+exports.index = function (req, res) {
+	models.Quiz.findAll().then(
+		function (quizes) {
+			res.render('quizes/index', { quizes: quizes });
+		}
+	).catch(function (error) { next(error); });
+};
+
 // GET /quizes/question
-exports.question = function (req, res) {
-	//res.render('quizes/question', { pregunta: "Capital de Italia" });
-	models.Quiz.findAll().then(function (quiz) {
-		res.render('quizes/question', { pregunta: quiz[0].pregunta });
-	})
+exports.show = function (req, res) {
+	res.render('quizes/show', { quiz: req.quiz });
 };
 
 // GET /quizes/answer
 exports.answer = function (req, res) {
-	//var resultado = (req.query && req.query.respuesta && req.query.respuesta.toUpperCase() === "ROMA") ? "Correcto": "Incorrecto";
-	models.Quiz.findAll().then(function (quiz) {
-		var resultado = req.query && req.query.respuesta && req.query.respuesta.toUpperCase() === quiz[0].respuesta.toUpperCase()
-			? "Correcto"
-			: "Incorrecto"
-			;
-		res.render('quizes/answer', { respuesta: resultado });
-	});
+	var resultado = req.query && req.query.respuesta && req.query.respuesta.toUpperCase() === req.quiz.respuesta.toUpperCase()
+		? "Correcto"
+		: "Incorrecto"
+		;
+	res.render('quizes/answer', { quiz: req.quiz, respuesta: resultado });
 };
