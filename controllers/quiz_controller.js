@@ -14,6 +14,7 @@ exports.load = function (req, res, next, quizId) {
 	).catch(function (error) { next(error); });
 };
 
+// GET /quizes
 exports.index = function (req, res) {
 	var _search = req.query.search
 		? "%" + req.query.search.replace(/ /g, "%") + "%"
@@ -70,3 +71,30 @@ exports.create = function (req, res) {
 			}
 		});
 };
+
+// GET /quizes/edit
+exports.edit = function (req, res) {
+	var quiz = req.quiz;
+
+	res.render('quizes/edit', { quiz: quiz, errors: [] });
+}
+
+// PUT /quizes/udpate
+exports.update = function (req, res) {
+	req.quiz.pregunta = req.body.quiz.pregunta;
+	req.quiz.respuesta = req.body.quiz.respuesta;
+
+	req.quiz
+		.validate()
+		.then( function (err) {
+			if (err) {
+				res.render('quizes/edit', { quiz: quiz, errors: err.errors });
+			} else {
+				req.quiz
+					.save({ fields: ['pregunta', 'respuesta'] })
+					.then( function () {
+						res.redirect('/quizes');
+					});
+			}
+		});
+}
