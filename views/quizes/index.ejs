@@ -16,6 +16,13 @@
                     <img src="images/edit.png" alt="Editar" title="Editar" />
                 </a>
             </td>
+            <td>
+                <form method="post" action="quizes/<%= quizes[i].id %>?method=delete">
+                    <button type="submit" onClick="return confirm('Borrar: <%= quizes[i].pregunta %>');">
+                        <img src="images/delete.png" />
+                    </button>
+                </form>
+            </td>
         </tr>
     <% } %>
 

@@ -28,6 +28,15 @@ nav span {
 	margin: 0 10px 0 0;
 }
 
+input[type=text] {
+	width: 150px;
+}
+
+button {
+	border: none;
+	background: none;
+}
+
 #ErrorMsgs {
 	color: #f61;
 	font-size: smaler;
@@ -44,3 +53,4 @@ div.author {
 .author div.photo img {
 	max-width: 150px;
 }
+
