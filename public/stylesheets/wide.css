@@ -17,7 +17,8 @@ nav span {
 section {
     float: right;
     width: 80%;
-    height: 200px;
+    height: 100%;
+    min-height: 200px;
 }
 footer {
     clear: both;

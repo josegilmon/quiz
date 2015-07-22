@@ -1,10 +1,25 @@
 <p>
     <label for="preg" class="rem">Pregunta:</label>
-    <input type="text" id="preg" name="quiz[pregunta]" value="<%= quiz.pregunta %>" />
+    <input type="text" id="preg" name="quiz[pregunta]" value="<%= quiz.pregunta %>" placeholder="Escribe tu pregunta aquí" />
 </p>
 <p>
-    <label for="preg" class="rem">Pregunta:</label>
-    <input type="text" id="resp" name="quiz[respuesta]" value="<%= quiz.respuesta %>" />
+    <label for="resp" class="rem">Respuesta:</label>
+    <input type="text" id="resp" name="quiz[respuesta]" value="<%= quiz.respuesta %>" placeholder="Escribe aquí la respuesta" />
+</p>
+<p>
+	<label for="cat" class="rem">Categoría:</label>
+	<select name="quiz[categoria]">
+		<%
+			// Definimos las categorías en un array
+			var categorias = ["Otro", "Humanidades", "Ocio", "Ciencia", "Tecnología"];
+
+			// Recorremos el array de categorías para pintar e inicializar el SELECT
+			for (var c = 0; c < categorias.length; c++) {
+				var cat = categorias[c];
+		%>
+				<option value="<%= cat %>" <%= quiz.categoria === cat ? "selected" : "" %> ><%= cat %></option>
+		<%	} %>
+	</select>
 </p>
 <p>
     <a href="/quizes"><button type="button">Cancelar</button></a>

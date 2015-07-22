@@ -28,6 +28,10 @@ nav span {
 	margin: 0 10px 0 0;
 }
 
+input[type=text] {
+	width: 150px;
+}
+
 #ErrorMsgs {
 	color: #f61;
 	font-size: smaler;
@@ -37,6 +41,17 @@ table {
 	width: 100%;
 	padding: 20px 0;
 }
+table td.wide { width: 50%; }
+table td.narrow {
+	width: auto;
+	padding-right: 5px;
+}
+table td.narrow img { height: 24px; }
+table button {
+	border: none;
+	background: none;
+}
+
 
 div.author {
 	height: 100%;
@@ -44,3 +59,4 @@ div.author {
 .author div.photo img {
 	max-width: 150px;
 }
+
