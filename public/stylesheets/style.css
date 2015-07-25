@@ -24,6 +24,10 @@ header, nav, section, footer{
 	background: #eee;
 	text-align: center;
 }
+header .right {
+	float: right;
+}
+
 nav span {
 	margin: 0 10px 0 0;
 }
@@ -59,4 +63,3 @@ div.author {
 .author div.photo img {
 	max-width: 150px;
 }
-

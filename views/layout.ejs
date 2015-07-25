@@ -17,6 +17,13 @@
 	<body>
 		<div id="page-wrap">
 			<header id="h1" class="main">
+				<span class="right">
+					<% if (!session.user) { %>
+						<a href="/login">Login</a>
+					<% } else { %>
+						<%= session.user.username %> - <a href="/logout">Logout</a>
+					<% }%>
+				</span>
 				<h2>Quiz: el juego de las preguntas</h1>
 			</header>
 
