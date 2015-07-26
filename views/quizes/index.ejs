@@ -1,34 +1,38 @@
 <form method='get' action='/quizes'>
-    Buscar:
-    <input type='text' name='search' placeholder='Texto a buscar...'>
-    <input type='submit' value='Enviar'>
+	Buscar:
+	<input type='text' name='search' placeholder='Texto a buscar...'>
+	<input type='submit' value='Enviar'>
 </form>
 
 <table>
 
-    <% for (var i = 0; i < quizes.length; i++) { %>
-        <tr>
-            <td class="wide">
-                <a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a>
-            </td>
-            <td class="wide">
-                [<%= quizes[i].categoria %>]
-            </td>
-            <td class="narrow">
-                <a href="quizes/<%= quizes[i].id %>/edit">
-                    <img src="images/edit.png" alt="Editar" title="Editar" />
-                </a>
-            </td>
-            <td class="narrow">
-                <form method="post" action="quizes/<%= quizes[i].id %>?method=delete">
-                    <button type="submit" onClick="return confirm('Borrar: <%= quizes[i].pregunta %>');">
-                        <img src="images/delete.png" />
-                    </button>
-                </form>
-            </td>
-        </tr>
-    <% } %>
+	<% for (var i = 0; i < quizes.length; i++) { %>
+		<tr>
+			<td class="wide">
+				<a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a>
+			</td>
+			<td class="wide">
+				[<%= quizes[i].categoria %>]
+			</td>
+			<% if (session.user) { %>
+				<td class="narrow">
+					<a href="quizes/<%= quizes[i].id %>/edit">
+						<img src="images/edit.png" alt="Editar" title="Editar" />
+					</a>
+				</td>
+				<td class="narrow">
+					<form method="post" action="quizes/<%= quizes[i].id %>?method=delete">
+						<button type="submit" onClick="return confirm('Borrar: <%= quizes[i].pregunta %>');">
+							<img src="images/delete.png" />
+						</button>
+					</form>
+				</td>
+			<% } %>
+		</tr>
+	<% } %>
 
 </table>
 
-<a href="/quizes/new"><button type="button">Crear pregunta</button></a>
+<% if (session.user) { %>
+	<a href="/quizes/new"><button type="button">Crear preguna</button></a>
+<% } %>

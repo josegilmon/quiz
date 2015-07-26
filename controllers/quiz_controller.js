@@ -1,6 +1,7 @@
 
 var models = require("../models/models.js");
 
+// Autoload de Quiz
 exports.load = function (req, res, next, quizId) {
 	models.Quiz.find({
 		where: {
