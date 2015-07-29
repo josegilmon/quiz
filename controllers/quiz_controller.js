@@ -142,5 +142,4 @@ exports.statistics = function (req, res) {
 			estadisticas.comentarios = comments.length;
 		}
 	).catch(function (error) { next(error); });
-
 }

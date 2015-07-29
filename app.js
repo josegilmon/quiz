@@ -28,6 +28,25 @@ app.use(session());
 app.use(methodOverride('method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// MW para comprobar si la sesión de usuario ha caducado, en cuyo caso, la borramos
+app.use( function (req, res, next) {
+	// Definimos las variables para comprobar la sesión:
+	//		fecha actual, la de último acceso, la diferencia entre ambas y el número de milisegundos del tiempo límite (2 minutos)
+	var actualDate = new Date().getTime(),
+		lastAccess = req.session.lastAccess || 0,
+		elapsedTime = actualDate - lastAccess,
+		limitTime = 2 * 60 * 1000;
+
+	if (elapsedTime > limitTime) {
+		// eliminamos la sesión del usuario
+		delete req.session.user;
+	}
+	// Guardamos el nuevo acceso del usuario
+	req.session.lastAccess = new Date().getTime();
+
+	next();
+});
+
 app.use( function (req, res, next) {
 	if ( !req.path.match(/\/login|\/logout/) ) {
 		req.session.redir = req.path;
