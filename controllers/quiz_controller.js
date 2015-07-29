@@ -118,3 +118,29 @@ exports.destroy = function (req, res) {
 		})
 		.catch(function (error) { next(error); });
 }
+
+
+// GET /quizes/statistics
+exports.statistics = function (req, res) {
+
+	var estadisticas = {
+		preguntas: 0,
+		comentarios: 0,
+		mediaDeComentarios: 0,
+		preguntasSinComentarios: 0,
+		preguntasConComentarios: 0
+	};
+
+	models.Quiz.findAll().then(
+		function (quizes) {
+			estadisticas.preguntas = quizes.length;
+		}
+	).catch(function (error) { next(error); });
+
+	models.Comment.findAll().then(
+		function (comments) {
+			estadisticas.comentarios = comments.length;
+		}
+	).catch(function (error) { next(error); });
+
+}

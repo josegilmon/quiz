@@ -36,6 +36,9 @@ router.get('/quizes/:quizId(\\d+)/comments/new',	commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments',		commentController.create);
 router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',	sessionController.loginRequired, commentController.publish);
 
+/* GET statistics page. */
+router.get('/quizes/statistics', quizController.statistics);
+
 /* GET authors page. */
 router.get('/author', authorController.author);
 
