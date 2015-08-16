@@ -1,4 +1,5 @@
 
+var Sequelize = require("sequelize");
 var models = require("../models/models.js");
 
 // Autoload de Quiz
@@ -118,7 +119,7 @@ exports.destroy = function (req, res) {
 
 
 // GET /quizes/statistics
-exports.statistics = function (req, res) {
+exports.statistics = function (req, res, next) {
 
 	var estadisticas = {
 		totalPreguntas: 0,
@@ -136,7 +137,22 @@ exports.statistics = function (req, res) {
 				.then(function (comments) {
 					estadisticas.totalComentarios = comments.length;
 
-					res.render('quizes/statistics', { estadisticas: estadisticas, errors: [] });
+					estadisticas.mediaDeComentarios = comments.length / quizes.length;
+
+					models.Quiz.findAll({
+						include: [{
+							model: models.Comment,
+							where: { id: Sequelize.col('quiz.id') }
+						}]
+					})
+					.then(function (moreQuizes) {
+						estadisticas.preguntasSinComentarios = estadisticas.totalPreguntas - moreQuizes.length;
+						estadisticas.preguntasConComentarios = moreQuizes.length;
+
+						res.render('quizes/statistics', { estadisticas: estadisticas, errors: [] });
+					})
+					.catch(function (error) { next(error); });
+
 				})
 				.catch(function (error) { next(error); });
 
