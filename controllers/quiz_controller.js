@@ -24,10 +24,7 @@ exports.load = function (req, res, next, quizId) {
 
 // GET /quizes
 exports.index = function (req, res) {
-	var _search = req.query.search
-		? "%" + req.query.search.replace(/ /g, "%") + "%"
-		: "%%"
-		;
+	var _search = req.query.search ? "%" + req.query.search.replace(/ /g, "%") + "%" : "%%";
 	models.Quiz.findAll( { where: ["pregunta like ?", _search] } ).then(
 		function (quizes) {
 			res.render('quizes/index', { quizes: quizes, errors: [] });
@@ -42,10 +39,10 @@ exports.show = function (req, res) {
 
 // GET /quizes/answer
 exports.answer = function (req, res) {
-	var resultado = req.query && req.query.respuesta && req.query.respuesta.toUpperCase() === req.quiz.respuesta.toUpperCase()
-		? "Correcto"
-		: "Incorrecto"
-		;
+	var resultado = req.query &&
+			req.query.respuesta &&
+			req.query.respuesta.toUpperCase() === req.quiz.respuesta.toUpperCase() ? "Correcto"	: "Incorrecto";
+
 	res.render('quizes/answer', {
 		quiz: req.quiz,
 		respuesta: resultado,
@@ -86,7 +83,7 @@ exports.edit = function (req, res) {
 	var quiz = req.quiz;
 
 	res.render('quizes/edit', { quiz: quiz, errors: [] });
-}
+};
 
 // PUT /quizes/udpate
 exports.update = function (req, res) {
@@ -107,7 +104,7 @@ exports.update = function (req, res) {
 					});
 			}
 		});
-}
+};
 
 // DELETE /quizes/delete
 exports.destroy = function (req, res) {
@@ -117,29 +114,32 @@ exports.destroy = function (req, res) {
 			res.redirect('/quizes');
 		})
 		.catch(function (error) { next(error); });
-}
+};
 
 
 // GET /quizes/statistics
 exports.statistics = function (req, res) {
 
 	var estadisticas = {
-		preguntas: 0,
-		comentarios: 0,
+		totalPreguntas: 0,
+		totalComentarios: 0,
 		mediaDeComentarios: 0,
 		preguntasSinComentarios: 0,
 		preguntasConComentarios: 0
 	};
 
-	models.Quiz.findAll().then(
-		function (quizes) {
-			estadisticas.preguntas = quizes.length;
-		}
-	).catch(function (error) { next(error); });
+	models.Quiz.findAll()
+		.then(function (quizes) {
+			estadisticas.totalPreguntas = quizes.length;
 
-	models.Comment.findAll().then(
-		function (comments) {
-			estadisticas.comentarios = comments.length;
-		}
-	).catch(function (error) { next(error); });
-}
+			models.Comment.findAll()
+				.then(function (comments) {
+					estadisticas.totalComentarios = comments.length;
+
+					res.render('quizes/statistics', { estadisticas: estadisticas, errors: [] });
+				})
+				.catch(function (error) { next(error); });
+
+		})
+		.catch(function (error) { next(error); });
+};

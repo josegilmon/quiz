@@ -62,3 +62,12 @@ div.author {
 .author div.photo img {
 	max-width: 150px;
 }
+
+table.statistics {
+	width: auto;
+	margin: 0 50px;
+	text-align: left;
+}
+table.statistics td.resultados {
+	padding-left: 25px;
+}
