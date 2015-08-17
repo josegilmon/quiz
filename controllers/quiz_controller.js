@@ -142,7 +142,7 @@ exports.statistics = function (req, res, next) {
 					models.Quiz.findAll({
 						include: [{
 							model: models.Comment,
-							where: { quiz_id: Sequelize.col('Quiz.id') }
+							where: { QuizId: Sequelize.col('Quiz.id') }
 						}]
 					})
 					.then(function (moreQuizes) {
