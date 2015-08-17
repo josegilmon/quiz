@@ -150,8 +150,6 @@ exports.statistics = function (req, res, next) {
     })
     .then(function (preguntasConComentarios) {
       estadisticas.preguntasConComentarios = preguntasConComentarios;
-
-      res.render('quizes/statistics', { estadisticas: estadisticas, errors: [] });
     })
     .catch(function (error) {
       errors.push(error);
