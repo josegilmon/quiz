@@ -15,7 +15,7 @@ module.exports = function (sequelize, DataTypes) {
         preguntasSinComentarios: function () {
           return this.aggregate('QuizId', 'count', {
               'where': {
-                'publicado': false
+                'publicado': 0
               }
             })
             .then('success', function(count) {
