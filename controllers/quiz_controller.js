@@ -141,7 +141,7 @@ exports.statistics = function (req, res, next) {
     })
     .then(function (totalComentarios) {
       estadisticas.totalComentarios = totalComentarios;
-      estadisticas.mediaDeComentarios = totalComentarios / estadisticas.totalPreguntas;
+      estadisticas.mediaDeComentarios = (totalComentarios / estadisticas.totalPreguntas).toFixed(2);
       return models.Comment.preguntasConComentarios();
     })
 /*
