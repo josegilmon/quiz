@@ -142,14 +142,17 @@ exports.statistics = function (req, res, next) {
     .then(function (totalComentarios) {
       estadisticas.totalComentarios = totalComentarios;
       estadisticas.mediaDeComentarios = totalComentarios / estadisticas.totalPreguntas;
-      return models.Comment.preguntasSinComentarios();
+      return models.Comment.preguntasConComentarios();
     })
+/*
     .then(function (preguntasSinComentarios) {
       estadisticas.preguntasSinComentarios = preguntasSinComentarios;
       return models.Comment.preguntasConComentarios();
     })
+*/
     .then(function (preguntasConComentarios) {
       estadisticas.preguntasConComentarios = preguntasConComentarios;
+      estadisticas.preguntasSinComentarios = estadisticas.totalPreguntas - preguntasConComentarios;
     })
     .catch(function (error) {
       errors.push(error);
